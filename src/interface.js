@@ -1,6 +1,5 @@
 'use strict';
 
-
 let program    = require('commander');
 let async      = require('async');
 let fs         = require('fs');
@@ -21,28 +20,6 @@ let download = function(url, options) {
     }
   }, cpen.create);
 }
-
-// let download = function(url, options) {
-//
-//   downloader.download(`${BASE_URL}${url}.html`, (data) => {
-//     fs.appendFile('index.html', data, (err) => {
-//       if (err) console.error(`${err.message}`);
-//     });
-//   });
-//
-//   downloader.download(`${BASE_URL}${url}.css`, (data) => {
-//     fs.appendFile('style.css', data, (err) => {
-//       if (err) console.error(`${err.message}`);
-//     });
-//   });
-//
-//   downloader.download(`${BASE_URL}${url}.js`, (data) => {
-//     fs.appendFile('main.js', data, (err) => {
-//       if (err) console.error(`${err.message}`);
-//     });
-//   });
-//
-// };
 
 program
   .version('0.1.0')
