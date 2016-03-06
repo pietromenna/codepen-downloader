@@ -9,9 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "async": "^1.5.2",
     "commander": "^2.9.0"
   },
-  "devDependencies" : {
-    "mocha" : "~2.3.4"
+  "devDependencies": {
+    "mocha": "~2.3.4"
   }
 }
