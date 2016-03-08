@@ -8,8 +8,8 @@ let ProgressBar = require('progress');
 
 module.exports = program;
 
-let download = function(url, options) {
-
+let download = function(url, destination, options) {
+  destination = destination || '.'
   let progress = new ProgressBar(`Downloading ( :percent )[:bar]`, {
     complete: '=',
     incomplete: '-',
@@ -38,9 +38,11 @@ let download = function(url, options) {
       });
     }
   }, (err, results) => {
-    progress.tick();
-    console.log('creating files');
-    cpen.create(err, results);
+    if (err) return console.error(err.message);
+    cpen.create(results, destination, (e) => {
+      progress.tick();
+      if (e) console.error(err.message);
+    });
   });
 }
 
@@ -49,7 +51,7 @@ program
   .option('-v, --verbose', 'output more log then usual')
 
 program
-  .command('download <url>')
+  .command('download <url> [destination]')
   .description('Download single codepen.io showcase based on URL')
   .action(download);
 

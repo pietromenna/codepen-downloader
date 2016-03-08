@@ -7,6 +7,28 @@ let ProgressBar = require('progress');
 
 const BASE_URL = "http://codepen.io"
 
+let createFile = (file, data, callback) => {
+  fs.stat(file, (err, stat) => {
+    if (!err) {
+      fs.unlink(file, (err) => {
+        if (err) return callback(err);
+        fs.appendFile(file, data, (e) => {
+          if (e) return callback(e);
+          return callback(null, data);
+        });
+      });
+    }
+    else if (err.code == 'ENOENT') {
+      fs.appendFile(file, data, (e) => {
+        if (e) return callback(e);
+        return callback(null, data);
+      });
+    } else {
+      return callback(err);
+    }
+  });
+};
+
 module.exports = {
 
   download : (url, file, fn) => {
@@ -26,23 +48,17 @@ module.exports = {
 
   },
 
-  create : (err, result) => {
-    if(err) {
-      console.error(`Error: ${err.message}`);
-    } else {
-      fs.appendFile('example/index.html', result.html, (e) => {
-        if(e) console.error(e.message);
-      });
-
-      fs.appendFile('example/style.css', result.css, (e) => {
-        if(e) console.error(e.message);
-      });
-
-      fs.appendFile('example/main.js', result.js, (e) => {
-        if(e) console.error(e.message);
-      });
-    }
-
+  create : (result, destination, fn) => {
+    async.parallel([
+      (callback) => {
+        createFile(`${destination}/index.html`, result.html, callback);
+      },
+      (callback) => {
+        createFile(`${destination}/style.css`, result.css, callback);
+      },
+      (callback) => {
+        createFile(`${destination}/main.js`, result.js, callback);
+      }
+    ], fn);
   }
-
 }
