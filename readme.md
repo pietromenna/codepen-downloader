@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/cpen.svg)](https://badge.fury.io/js/cpen)
 
-Download all three files from a [codepen](www.codepen.io) to your machine.
+Download all three files from a [codepen](http://www.codepen.io) to your machine.
 
 ### Install
 
