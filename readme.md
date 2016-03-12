@@ -1,6 +1,6 @@
 # Codepen Downloader
 
-[![npm version](https://badge.fury.io/js/cpen.svg)](https://badge.fury.io/js/cpen)
+[![NPM Version][npm-image]][npm-url]
 
 Download all three files from a [codepen](http://www.codepen.io) to your machine.
 
@@ -17,3 +17,6 @@ Download all three files from a [codepen](http://www.codepen.io) to your machine
 `cpen download /samirc/pen/vGKoxj`
 
 This will download `.html` `.js` and `.css` files to current folder.
+
+[npm-image]: https://img.shields.io/npm/v/cpen.svg
+[npm-url]: https://npmjs.org/package/cpen
