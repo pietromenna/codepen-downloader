@@ -7,27 +7,36 @@ let ProgressBar = require('progress');
 
 const BASE_URL = "http://codepen.io"
 
-let createFile = (file, data, callback) => {
+let removeFileIfExists = (file, fn) => {
   fs.stat(file, (err, stat) => {
-    if (!err) {
-      fs.unlink(file, (err) => {
-        if (err) return callback(err);
-        fs.appendFile(file, data, (e) => {
-          if (e) return callback(e);
-          return callback(null, data);
-        });
-      });
-    }
-    else if (err.code == 'ENOENT') {
-      fs.appendFile(file, data, (e) => {
-        if (e) return callback(e);
-        return callback(null, data);
-      });
+    if(!err) {
+      fs.unlink(file, fn);
+    } else if (err.code != 'ENOENT') {
+      fn(err);
     } else {
-      return callback(err);
+      fn(null);
     }
   });
+}
+
+let createFile = (file, data, fn) => {
+  removeFileIfExists(file, (err) => {
+    if (err) return fn(err);
+    fs.appendFile(file, data, fn);
+  });
 };
+
+let createIndexHtmlFile = (file, html, fn) => {
+  async.parallel([
+    (callback) => fs.readFile(__dirname + '/template/head.html', callback),
+    (callback) => fs.readFile(__dirname + '/template/foot.html', callback)
+  ], (err, data) => {
+    if(err) return fn(err);
+    fs.appendFileSync(file, data[0]);
+    fs.appendFileSync(file, html);
+    fs.appendFileSync(file, data[1]);
+  });
+}
 
 module.exports = {
 
@@ -51,7 +60,7 @@ module.exports = {
   create : (result, destination, fn) => {
     async.parallel([
       (callback) => {
-        createFile(`${destination}/index.html`, result.html, callback);
+        createIndexHtmlFile(`${destination}/index.html`, result.html, callback)
       },
       (callback) => {
         createFile(`${destination}/style.css`, result.css, callback);

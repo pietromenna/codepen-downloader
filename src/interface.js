@@ -41,7 +41,7 @@ let download = function(url, destination, options) {
     if (err) return console.error(err.message);
     cpen.create(results, destination, (e) => {
       progress.tick();
-      if (e) console.error(err.message);
+      if (e) console.error(e.message);
     });
   });
 }
