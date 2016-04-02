@@ -40,7 +40,7 @@ let createIndexHtmlFile = (file, html, fn) => {
 
 let createDirectoryIfMissing = (destination, callback) => {
   fs.readdir(destination, (err, files) => {
-    if (!err) callback();
+    if (!err) return callback();
     fs.mkdir(destination, (err) => {
       callback(err);
     });

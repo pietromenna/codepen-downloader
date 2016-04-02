@@ -14,7 +14,7 @@ let download = function(url, destination, options) {
     complete: '=',
     incomplete: '-',
     width: 50,
-    total: 4
+    total: 3
   });
 
   progress.tick();
