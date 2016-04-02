@@ -38,6 +38,15 @@ let createIndexHtmlFile = (file, html, fn) => {
   });
 }
 
+let createDirectoryIfMissing = (destination, callback) => {
+  fs.readdir(destination, (err, files) => {
+    if (!err) callback();
+    fs.mkdir(destination, (err) => {
+      callback(err);
+    });
+  });
+}
+
 module.exports = {
 
   download : (url, file, fn) => {
@@ -58,16 +67,19 @@ module.exports = {
   },
 
   create : (result, destination, fn) => {
-    async.parallel([
-      (callback) => {
-        createIndexHtmlFile(`${destination}/index.html`, result.html, callback)
-      },
-      (callback) => {
-        createFile(`${destination}/style.css`, result.css, callback);
-      },
-      (callback) => {
-        createFile(`${destination}/main.js`, result.js, callback);
-      }
-    ], fn);
+    createDirectoryIfMissing(destination, (err) => {
+      if (err) console.error(`Error: ${err}`);
+      async.parallel([
+        (callback) => {
+          createIndexHtmlFile(`${destination}/index.html`, result.html, callback)
+        },
+        (callback) => {
+          createFile(`${destination}/style.css`, result.css, callback);
+        },
+        (callback) => {
+          createFile(`${destination}/main.js`, result.js, callback);
+        }
+      ], fn);
+    });
   }
 }
