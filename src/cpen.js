@@ -1,17 +1,17 @@
-'use strict';
+"use strict";
 
 let fs = require('fs');
 let http = require('http');
 let async = require('async');
 let ProgressBar = require('progress');
 
-const BASE_URL = "http://codepen.io"
+const BASE_URL = "http://codepen.io";
 
 let removeFileIfExists = (file, fn) => {
-  fs.stat(file, (err, stat) => {
+  fs.stat(file, (err) => {
     if(!err) {
       fs.unlink(file, fn);
-    } else if (err.code != 'ENOENT') {
+    } else if (err.code !== "ENOENT") {
       fn(err);
     } else {
       fn(null);
@@ -39,7 +39,7 @@ let createIndexHtmlFile = (file, html, fn) => {
 }
 
 let createDirectoryIfMissing = (destination, callback) => {
-  fs.readdir(destination, (err, files) => {
+  fs.readdir(destination, (err) => {
     if (!err) return callback();
     fs.mkdir(destination, (err) => {
       callback(err);
@@ -53,7 +53,7 @@ module.exports = {
     http.get(`${BASE_URL}${url}.${file}`, (res) => {
       let buffer = '';
       res
-      .on('data', (chunk) => {
+      .on("data", (chunk) => {
         buffer += chunk;
       })
       .on('end', () => {
@@ -68,7 +68,7 @@ module.exports = {
 
   create : (result, destination, fn) => {
     createDirectoryIfMissing(destination, (err) => {
-      if (err) console.error(`Error: ${err}`);
+      if (err) console.log(`Error: ${err}`);
       async.parallel([
         (callback) => {
           createIndexHtmlFile(`${destination}/index.html`, result.html, callback)
