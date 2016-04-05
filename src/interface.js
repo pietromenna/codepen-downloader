@@ -43,6 +43,7 @@ let download = function(url, destination, options) {
     cpen.create(results, destination, (e) => {
       progress.tick();
       if (e) console.error(e.message);
+      else console.log('Completed');
     });
   });
 }

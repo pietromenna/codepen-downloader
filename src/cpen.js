@@ -32,9 +32,13 @@ let createIndexHtmlFile = (file, html, fn) => {
     (callback) => fs.readFile(__dirname + '/template/foot.html', callback)
   ], (err, data) => {
     if(err) return fn(err);
-    fs.appendFileSync(file, data[0]);
-    fs.appendFileSync(file, html);
-    fs.appendFileSync(file, data[1]);
+    removeFileIfExists(file, (err) => {
+      if (err) return fn(err);
+      fs.appendFileSync(file, data[0]);
+      fs.appendFileSync(file, html);
+      fs.appendFileSync(file, data[1]);
+      fn(null, file);
+    });
   });
 }
 
