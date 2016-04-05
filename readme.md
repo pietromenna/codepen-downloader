@@ -1,6 +1,7 @@
 # Codepen Downloader
 
 [![NPM Version][npm-image]][npm-url]
+[![Build Status](https://travis-ci.org/fredrb/codepen-downloader.svg?branch=master)](https://travis-ci.org/fredrb/codepen-downloader)
 
 Download all three files from a [codepen](http://www.codepen.io) to your machine.
 
