@@ -1,10 +1,11 @@
 'use strict';
 
-let program    = require('commander');
-let async      = require('async');
-let fs         = require('fs');
-let cpen       = require('./cpen');
+let program     = require('commander');
+let async       = require('async');
+let fs          = require('fs');
+let cpen        = require('./cpen');
 let ProgressBar = require('progress');
+let packageJson = require('../package.json');
 
 module.exports = program;
 
@@ -47,7 +48,7 @@ let download = function(url, destination, options) {
 }
 
 program
-  .version('0.1.0')
+  .version(packageJson.version);
   .option('-v, --verbose', 'output more log then usual')
 
 program
