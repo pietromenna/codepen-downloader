@@ -3,7 +3,7 @@
 [![NPM Version][npm-image]][npm-url]
 [![Build Status](https://travis-ci.org/fredrb/codepen-downloader.svg?branch=master)](https://travis-ci.org/fredrb/codepen-downloader)
 
-Download all three files from a [codepen](http://www.codepen.io) to your machine.
+Command line tool to download showcases from [codepen](http://www.codepen.io) to your machine.
 
 ### Install
 
@@ -11,13 +11,17 @@ Download all three files from a [codepen](http://www.codepen.io) to your machine
 
 ### Usage
 
-`cpen download <codepen url>`
+`cpen download <codepen url> [destination]`
 
 #### Example
 
-`cpen download /samirc/pen/vGKoxj`
+`cpen download /samirc/pen/vGKoxj example`
 
-This will download `.html` `.js` and `.css` files to current folder.
+This will download `.html` `.js` and `.css` files to `example` folder.
+
+#### Contributing
+
+Want to contribute? [Check the recommendations](https://github.com/fredrb/codepen-downloader/blob/master/contributing.md).
 
 [npm-image]: https://img.shields.io/npm/v/cpen.svg
 [npm-url]: https://npmjs.org/package/cpen
