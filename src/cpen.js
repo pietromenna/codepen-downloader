@@ -5,12 +5,11 @@ let http = require('http');
 let async = require('async');
 let util  = require('./util');
 
-const BASE_URL = "http://codepen.io";
 
 module.exports = {
 
   download : (url, file, fn) => {
-    http.get(`${BASE_URL}${url}.${file}`, (res) => {
+    http.get(`${util.parseUrl(url)}.${file}`, (res) => {
       let buffer = '';
       res
       .on("data", (chunk) => {

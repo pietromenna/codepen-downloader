@@ -2,7 +2,24 @@
 let fs = require('fs');
 let async = require('async');
 
+const fullURL   = /http[s]?:\/\/codepen\.io\/(.*)\/(.*)\/(.*)/
+const domainURL = /codepen\.io\/(.*)\/(.*)\/(.*)/
+const penURL    = /\/(.*)\/(.*)\/(.*)/
+
 module.exports = {
+
+  parseUrl : function(url) {
+    if (fullURL.exec(url) !== null) {
+      return url;
+    } else if (domainURL.exec(url) !== null){
+      return `http://${url}`;
+    } else if (penURL.exec(url) !== null) {
+      return `http://codepen.io${url}`;
+    } else {
+      throw new Error('Invalid URL');
+    }
+  },
+
   createDirectoryIfMissing : function(destination, callback) {
     fs.readdir(destination, (err) => {
       if (!err) return callback();
