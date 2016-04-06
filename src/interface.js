@@ -49,7 +49,7 @@ let download = function(url, destination, options) {
 }
 
 program
-  .version(packageJson.version);
+  .version(packageJson.version)
   .option('-v, --verbose', 'output more log then usual')
 
 program

@@ -3,53 +3,9 @@
 let fs = require('fs');
 let http = require('http');
 let async = require('async');
-let ProgressBar = require('progress');
+let util  = require('./util');
 
 const BASE_URL = "http://codepen.io";
-
-let removeFileIfExists = (file, fn) => {
-  fs.stat(file, (err) => {
-    if(!err) {
-      fs.unlink(file, fn);
-    } else if (err.code !== "ENOENT") {
-      fn(err);
-    } else {
-      fn(null);
-    }
-  });
-}
-
-let createFile = (file, data, fn) => {
-  removeFileIfExists(file, (err) => {
-    if (err) return fn(err);
-    fs.appendFile(file, data, fn);
-  });
-};
-
-let createIndexHtmlFile = (file, html, fn) => {
-  async.parallel([
-    (callback) => fs.readFile(__dirname + '/template/head.html', callback),
-    (callback) => fs.readFile(__dirname + '/template/foot.html', callback)
-  ], (err, data) => {
-    if(err) return fn(err);
-    removeFileIfExists(file, (err) => {
-      if (err) return fn(err);
-      fs.appendFileSync(file, data[0]);
-      fs.appendFileSync(file, html);
-      fs.appendFileSync(file, data[1]);
-      fn(null, file);
-    });
-  });
-}
-
-let createDirectoryIfMissing = (destination, callback) => {
-  fs.readdir(destination, (err) => {
-    if (!err) return callback();
-    fs.mkdir(destination, (err) => {
-      callback(err);
-    });
-  });
-}
 
 module.exports = {
 
@@ -71,17 +27,17 @@ module.exports = {
   },
 
   create : (result, destination, fn) => {
-    createDirectoryIfMissing(destination, (err) => {
+    util.createDirectoryIfMissing(destination, (err) => {
       if (err) console.log(`Error: ${err}`);
       async.parallel([
         (callback) => {
-          createIndexHtmlFile(`${destination}/index.html`, result.html, callback)
+          util.createIndexHtmlFile(`${destination}/index.html`, result.html, callback)
         },
         (callback) => {
-          createFile(`${destination}/style.css`, result.css, callback);
+          util.createFile(`${destination}/style.css`, result.css, callback);
         },
         (callback) => {
-          createFile(`${destination}/main.js`, result.js, callback);
+          util.createFile(`${destination}/main.js`, result.js, callback);
         }
       ], fn);
     });
