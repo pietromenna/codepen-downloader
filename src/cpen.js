@@ -1,6 +1,5 @@
 "use strict";
 
-let fs = require('fs');
 let http = require('http');
 let async = require('async');
 let util  = require('./util');
@@ -32,8 +31,7 @@ module.exports = {
       if (err) return console.error(err.message);
       this.create(results, destination, (e) => {
         onTick();
-        if (e) console.error(e.message);
-        else console.log('Completed');
+        callback(e);
       });
     });
   },
