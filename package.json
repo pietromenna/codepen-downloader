@@ -1,6 +1,6 @@
 {
   "name": "cpen",
-  "version": "0.3.8",
+  "version": "0.3.12",
   "description": "Download codepens",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha"
