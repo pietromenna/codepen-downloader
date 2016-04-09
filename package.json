@@ -1,8 +1,7 @@
 {
   "name": "cpen",
-  "version": "0.3.1",
+  "version": "0.3.8",
   "description": "Download codepens",
-  "main": "index.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha"
   },
@@ -27,7 +26,5 @@
   "bugs": {
     "url": "https://github.com/fredrb/codepen-downloader/issues"
   },
-  "bin": {
-    "cpen": "src/cli.js"
-  }
+  "bin": "./bin/cli.js"
 }

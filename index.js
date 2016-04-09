@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-require('./src/lib/cpen.js');
+module.exports = require('./src/cpen.js');
