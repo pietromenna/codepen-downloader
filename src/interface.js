@@ -3,7 +3,7 @@
 let program     = require('commander');
 let async       = require('async');
 let fs          = require('fs');
-let cpen        = require('./cpen');
+let cpen        = require('.lib/cpen');
 let ProgressBar = require('progress');
 let packageJson = require('../package.json');
 
