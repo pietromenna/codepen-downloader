@@ -28,6 +28,6 @@
     "url": "https://github.com/fredrb/codepen-downloader/issues"
   },
   "bin": {
-    "cpen": "index.js"
+    "cpen": "src/cli.js"
   }
 }

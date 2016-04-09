@@ -20,13 +20,14 @@ let triggerDownload = function(url, destination, options) {
 
   // @todo: validate options
 
-  cpen.download(url, destination, options,
-    (message) => {
-      progress.tick();
-    },
+  cpen.download(url, destination,
     (err) => {
       if (err) return console.log(`Error: ${err.message}`);
       console.log(`Completed`);
+    },
+    options,
+    (message) => {
+      progress.tick();
     });
 }
 

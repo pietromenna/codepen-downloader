@@ -6,23 +6,26 @@ const util = require('./util');
 
 module.exports = {
 
-  download(url, destination, options, onTick, onCompleteCallback) {
+  download(url, destination, onCompleteCallback, options, onTick) {
     async.parallel({
       html: (callback) => {
         this._downloadFile(url, 'html', (err, data) => {
-          onTick();
+          if (onTick)
+            onTick();
           callback(err, data);
         });
       },
       css: (callback) => {
         this._downloadFile(url, 'css', (err, data) => {
-          onTick();
+          if (onTick)
+            onTick();
           callback(err, data);
         });
       },
       js: (callback) => {
         this._downloadFile(url, 'js', callback, (err, data) => {
-          onTick();
+          if (onTick)
+            onTick();
           callback(err, data);
         });
       },
@@ -32,7 +35,8 @@ module.exports = {
       }
 
       this.create(results, destination, (e) => {
-        onTick();
+        if (onTick)
+          onTick();
         onCompleteCallback(e);
       });
     });
