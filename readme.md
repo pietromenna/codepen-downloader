@@ -3,21 +3,40 @@
 [![NPM Version][npm-image]][npm-url]
 [![Build Status](https://travis-ci.org/fredrb/codepen-downloader.svg?branch=master)](https://travis-ci.org/fredrb/codepen-downloader)
 
-Command line tool to download showcases from [codepen](http://www.codepen.io) to your machine.
+Codepen Downloader is a tool used to download showcases from [codepen](http://www.codepen.io) to your machine. This can be done either via a command line tool or from a provided download method.
 
 ### Install
 
+It's recommended to install globally since it can be used as command line tool.
+
 `npm install cpen -g`
 
-### Usage
+You can then download any codepen with the following command:
 
 `cpen download <codepen url> [destination]`
 
-#### Example
+You can provide the full URL or only the codepen extension reference (e.g. `/samirc/pen/vGKoxj`)
 
-`cpen download /samirc/pen/vGKoxj example`
+### Examples
 
-This will download `.html` `.js` and `.css` files to `example` folder.
+##### Command line:
+
+`cpen download /samirc/pen/vGKoxj resource`
+
+This will download `.html` `.js` and `.css` files to `resource` folder.
+
+##### Code:
+
+The same example as above can be translated to the following snippet:
+
+```js
+var cpen = require('cpen');
+
+cpen.download('/samirc/pen/vGKoxj', 'resource', function(err) {
+  if (err) throw err;
+  console.log('Download completed!');
+});
+```
 
 #### Contributing
 
