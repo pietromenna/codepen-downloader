@@ -2,6 +2,7 @@
 
 [![NPM Version][npm-image]][npm-url]
 [![Build Status](https://travis-ci.org/fredrb/codepen-downloader.svg?branch=master)](https://travis-ci.org/fredrb/codepen-downloader)
+[![NPM Downloads][npm-downloads]][npm-url]
 
 Codepen Downloader is a tool used to download showcases from [codepen](http://www.codepen.io) to your machine. This can be done either via a command line tool or from a provided download method.
 
@@ -43,4 +44,5 @@ cpen.download('/samirc/pen/vGKoxj', 'resource', function(err) {
 Want to contribute? [Check the recommendations](https://github.com/fredrb/codepen-downloader/blob/master/contributing.md).
 
 [npm-image]: https://img.shields.io/npm/v/cpen.svg
+[npm-downloads]: https://img.shields.io/npm/dm/cpen.svg
 [npm-url]: https://npmjs.org/package/cpen
