@@ -13,9 +13,9 @@ module.exports = {
   },
 
   _preProcessors(json, obj) {
-    obj.html_pre_processor = json.editor_settings.html_pre_processor;
-    obj.css_pre_processor = json.editor_settings.css_pre_processor;
-    obj.js_pre_processor = json.editor_settings.js_pre_processor;
+    obj.html_pre_processor = json.html_pre_processor;
+    obj.css_pre_processor = json.css_pre_processor;
+    obj.js_pre_processor = json.js_pre_processor;
   },
 
   getPenProperties(url, callback) {
