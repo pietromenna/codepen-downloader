@@ -1,6 +1,6 @@
 {
   "name": "cpen",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Download codepens",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha --timeout=10000"
