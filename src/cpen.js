@@ -3,6 +3,7 @@
 const http = require('http');
 const async = require('async');
 const util = require('./util');
+const web = require('./web');
 
 module.exports = {
 
@@ -29,6 +30,13 @@ module.exports = {
           callback(err, data);
         });
       },
+      deps : (callback) => {
+        web.getPenProperties(url, (err, data) => {
+          if (onTick)
+            onTick();
+          callback(err, data);
+        })
+      }
     }, (err, results) => {
       if (err) {
         return console.error(err.message);

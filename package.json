@@ -3,14 +3,16 @@
   "version": "0.4.0",
   "description": "Download codepens",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha"
+    "test": "./node_modules/mocha/bin/mocha --timeout=10000"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "async": "^1.5.2",
     "commander": "^2.9.0",
-    "progress": "^1.1.8"
+    "html-entities": "^1.2.0",
+    "progress": "^1.1.8",
+    "scrape": "^0.2.3"
   },
   "devDependencies": {
     "chai": "^3.5.0",
