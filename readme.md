@@ -18,7 +18,7 @@ You can then download any codepen with the following command:
 
 You can provide the full URL or only the codepen extension reference (e.g. `/samirc/pen/vGKoxj`)
 
-### Examples
+### Reference:
 
 ##### Command line:
 
@@ -26,9 +26,9 @@ You can provide the full URL or only the codepen extension reference (e.g. `/sam
 
 This will download `.html` `.js` and `.css` files to `resource` folder.
 
-##### Code:
+##### cpen.Download(url, destination, onCompleteCallback, [options], [onTick]):
 
-The same example as above can be translated to the following snippet:
+You can use this method to dynamically download codepen files.
 
 ```js
 var cpen = require('cpen');
@@ -38,6 +38,22 @@ cpen.download('/samirc/pen/vGKoxj', 'resource', function(err) {
   console.log('Download completed!');
 });
 ```
+
+The options property is used to select which files should be downloaded. Example: `['html', 'css', 'js']`
+
+```js
+var cpen = require('cpen');
+
+cpen.download('/ge1doot/pen/aNVYPN', 'resource', function() {
+  if (err) throw err;
+  console.log('Downloaded JS file to folder');
+}, {
+  targetFiles : ['js'],
+  includeDependencies : true
+});
+
+```
+
 
 #### Contributing
 
