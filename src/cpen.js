@@ -9,7 +9,6 @@ module.exports = {
   download(url, destination, onCompleteCallback, options, onTick) {
     options = options || util.defaultOptions;
     let parallel = {};
-    debugger;
     options.targetFiles.forEach(f => parallel[f] = this.downloadFromEndpoint(url, f));
 
     if (options.includeDependencies) {
