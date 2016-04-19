@@ -21,6 +21,15 @@ let triggerDownload = function(url, destination, options) {
 
   // @todo: validate options
 
+  if (options === null || options === undefined) {
+    options = {};
+  };
+
+  options['targetFiles'] = ['html', 'css', 'js'];
+  options['includeDependencies'] = true;
+
+  debugger;
+
   cpen.download(url, destination,
     (err) => {
       if (err) return console.log(`Error: ${err.message}`);

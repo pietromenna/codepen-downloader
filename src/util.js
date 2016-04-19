@@ -62,6 +62,11 @@ module.exports = {
         fn(null);
       }
     });
+  },
+
+  defaultOptions : {
+    targetFiles : ['html', 'css', 'js'],
+    includeDependencies : true
   }
 
 };

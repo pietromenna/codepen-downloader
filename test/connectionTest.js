@@ -21,7 +21,10 @@ describe('download test', () => {
         expect(err).to.be.null;
         done();
       },
-      [],
+      {
+        targetFiles : ['html', 'css', 'js'],
+        includeDependencies : true
+      },
       () =>  console.log('Tick!'));
   });
 
@@ -31,7 +34,10 @@ describe('download test', () => {
         expect(err).to.be.null;
         done();
       },
-      []);
+      {
+        targetFiles : ['html', 'css', 'js'],
+        includeDependencies : true
+      });
   });
 
   it('should download files to example folder, no ticks, no options', (done) => {

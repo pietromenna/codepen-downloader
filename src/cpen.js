@@ -1,6 +1,5 @@
 'use strict';
 
-const http = require('http');
 const async = require('async');
 const util = require('./util');
 const web = require('./web');
@@ -8,36 +7,22 @@ const web = require('./web');
 module.exports = {
 
   download(url, destination, onCompleteCallback, options, onTick) {
-    async.parallel({
-      html: (callback) => {
-        this._downloadFile(url, 'html', (err, data) => {
-          if (onTick)
-            onTick();
-          callback(err, data);
-        });
-      },
-      css: (callback) => {
-        this._downloadFile(url, 'css', (err, data) => {
-          if (onTick)
-            onTick();
-          callback(err, data);
-        });
-      },
-      js: (callback) => {
-        this._downloadFile(url, 'js', callback, (err, data) => {
-          if (onTick)
-            onTick();
-          callback(err, data);
-        });
-      },
-      deps : (callback) => {
+    options = options || util.defaultOptions;
+    let parallel = {};
+    debugger;
+    options.targetFiles.forEach(f => parallel[f] = this.downloadFromEndpoint(url, f));
+
+    if (options.includeDependencies) {
+      parallel['deps'] = (callback) => {
         web.getPenProperties(url, (err, data) => {
           if (onTick)
-            onTick();
+          onTick();
           callback(err, data);
         })
-      }
-    }, (err, results) => {
+      };
+    }
+
+    async.parallel(parallel, (err, results) => {
       if (err) {
         return console.error(err.message);
       }
@@ -50,20 +35,14 @@ module.exports = {
     });
   },
 
-  _downloadFile(url, file, fn) {
-    http.get(`${util.parseUrl(url)}.${file}`, (res) => {
-      let buffer = '';
-      res
-      .on('data', (chunk) => {
-        buffer += chunk;
-      })
-      .on('end', () => {
-        fn(null, buffer);
-      })
-      .on('err', (err) => {
-        fn(err);
+  downloadFromEndpoint(url, fileExtension) {
+    return (callback) => {
+      web.downloadFile(url, fileExtension, callback, (err, data) => {
+        if(onTick)
+          onTick();
+        callback();
       });
-    });
+    }
   },
 
   create(result, destination, fn) {

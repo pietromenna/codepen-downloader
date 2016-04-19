@@ -2,6 +2,8 @@
 
 let scrape = require('scrape');
 let htmlEntities = require('html-entities').AllHtmlEntities;
+let http = require('http');
+let util = require('./util');
 
 let html = new htmlEntities();
 
@@ -30,6 +32,21 @@ module.exports = {
 
       callback(null, properties);
     });
+  },
 
-  }
+  downloadFile(url, file, fn) {
+    http.get(`${util.parseUrl(url)}.${file}`, (res) => {
+      let buffer = '';
+      res
+      .on('data', (chunk) => {
+        buffer += chunk;
+      })
+      .on('end', () => {
+        fn(null, buffer);
+      })
+      .on('err', (err) => {
+        fn(err);
+      });
+    });
+  },
 }
