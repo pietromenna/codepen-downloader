@@ -2,5 +2,5 @@
 
 rm -Rf example
 mkdir example
-node index.js download /toniwonkanobi/pen/PNzdVr example
+node bin/cli.js download /toniwonkanobi/pen/PNzdVr example
 google-chrome example/index.html

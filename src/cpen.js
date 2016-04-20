@@ -49,7 +49,7 @@ module.exports = {
       if (err) console.log(`Error: ${err}`);
       async.parallel([
         (callback) => {
-          util.createIndexHtmlFile(`${destination}/index.html`, result.html, callback);
+          util.createIndexHtmlFile(`${destination}/index.html`, result, callback);
         },
         (callback) => {
           util.createFile(`${destination}/style.css`, result.css, callback);

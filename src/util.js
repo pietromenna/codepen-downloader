@@ -6,6 +6,8 @@ const fullURL   = /http[s]?:\/\/codepen\.io\/(.*)\/(.*)\/(.*)/;
 const domainURL = /codepen\.io\/(.*)\/(.*)\/(.*)/;
 const penURL    = /\/(.*)\/(.*)\/(.*)/;
 
+const normalURL = /htt[s]?:\/\/(.*)/;
+
 module.exports = {
 
   parseUrl(url) {
@@ -29,17 +31,38 @@ module.exports = {
     });
   },
 
-  createIndexHtmlFile(file, html, fn) {
+  parseScriptUrl(url) {
+    if (normalURL.exec(url) === null)
+      return `http:${url}`;
+    else
+      return url;
+  },
+
+  createScriptTag(result) {
+    let scripts = "";
+    result.deps.resources.forEach((d) => {
+      d.url = this.parseScriptUrl(d.url);
+      if (d.resource_type === 'js')
+        scripts = `${scripts}\n \
+                    <script src=${d.url}></script>`;
+    });
+    return scripts;
+  },
+
+  createIndexHtmlFile(file, result, fn) {
     async.parallel([
-      (callback) => fs.readFile(__dirname + '/template/head.html', callback),
+      (callback) => fs.readFile(__dirname + '/template/head01.html', callback),
+      (callback) => fs.readFile(__dirname + '/template/head02.html', callback),
       (callback) => fs.readFile(__dirname + '/template/foot.html', callback)
     ], (err, data) => {
       if(err) return fn(err);
       this.removeFileIfExists(file, (err) => {
         if (err) return fn(err);
         fs.appendFileSync(file, data[0]);
-        fs.appendFileSync(file, html);
+        fs.appendFileSync(file, this.createScriptTag(result));
         fs.appendFileSync(file, data[1]);
+        fs.appendFileSync(file, result.html);
+        fs.appendFileSync(file, data[2]);
         fn(null, file);
       });
     });
