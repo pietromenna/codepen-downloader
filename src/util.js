@@ -40,12 +40,14 @@ module.exports = {
 
   createScriptTag(result) {
     let scripts = "";
-    result.deps.resources.forEach((d) => {
-      d.url = this.parseScriptUrl(d.url);
-      if (d.resource_type === 'js')
+    if (result.deps) {
+      result.deps.resources.forEach((d) => {
+        d.url = this.parseScriptUrl(d.url);
+        if (d.resource_type === 'js')
         scripts = `${scripts}\n \
-                    <script src=${d.url}></script>`;
-    });
+        <script src=${d.url}></script>`;
+      });
+    }
     return scripts;
   },
 
