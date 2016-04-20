@@ -6,16 +6,16 @@ const web = require('./web');
 
 module.exports = {
 
-  download(url, destination, onCompleteCallback, options, onTick) {
+  download(url, destination, onCompleteCallback, options) {
     options = util.evaluateOptions(options);
     let parallel = {};
-    options.targetFiles.forEach(f => parallel[f] = this.downloadFromEndpoint(url, f));
+    options.targetFiles.forEach(f => parallel[f] = this.downloadFromEndpoint(url, f, options));
 
     if (options.includeDependencies) {
       parallel['deps'] = (callback) => {
         web.getPenProperties(url, (err, data) => {
-          if (onTick)
-            onTick();
+          if (options.onTick)
+            options.onTick();
           callback(err, data);
         })
       };
@@ -27,18 +27,18 @@ module.exports = {
       }
 
       this.create(results, destination, (e) => {
-        if (onTick)
-          onTick();
+        if (options.onTick)
+          options.onTick();
         onCompleteCallback(e);
       });
     });
   },
 
-  downloadFromEndpoint(url, fileExtension, onTick) {
+  downloadFromEndpoint(url, fileExtension, options) {
     return (callback) => {
       web.downloadFile(url, fileExtension, callback, (err, data) => {
-        if(onTick)
-          onTick();
+        if(options.onTick)
+          options.onTick();
         callback();
       });
     }

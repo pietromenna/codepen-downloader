@@ -11,7 +11,7 @@ test-cpen:
 test-connection:
 	@echo ------- STARTING CONNETION TESTS -------
 	./node_modules/mocha/bin/mocha \
-		test/connectionTest.js
+		test/connectionTest.js --timeout=15000
 	@echo ------- CONNETION TESTS COMPELTED -------
 
 .PHONY: test test-cpen test-connection test-complete
