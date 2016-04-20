@@ -10,6 +10,16 @@ const normalURL = /htt[s]?:\/\/(.*)/;
 
 module.exports = {
 
+  evaluateOptions(options) {
+    for(let opt in this.defaultOptions) {
+      if (!options.hasOwnProperty(opt)) {
+        options[opt] = this.defaultOptions[opt];
+      };
+    };
+
+    return options;
+  },
+
   parseUrl(url) {
     if (fullURL.exec(url) !== null) {
       return url;
@@ -91,7 +101,8 @@ module.exports = {
 
   defaultOptions : {
     targetFiles : ['html', 'css', 'js'],
-    includeDependencies : true
+    includeDependencies : true,
+    includePreProcessed : true
   }
 
 };

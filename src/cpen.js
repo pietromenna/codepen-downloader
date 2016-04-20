@@ -7,7 +7,7 @@ const web = require('./web');
 module.exports = {
 
   download(url, destination, onCompleteCallback, options, onTick) {
-    options = options || util.defaultOptions;
+    options = util.evaluateOptions(options);
     let parallel = {};
     options.targetFiles.forEach(f => parallel[f] = this.downloadFromEndpoint(url, f));
 
@@ -15,7 +15,7 @@ module.exports = {
       parallel['deps'] = (callback) => {
         web.getPenProperties(url, (err, data) => {
           if (onTick)
-          onTick();
+            onTick();
           callback(err, data);
         })
       };
@@ -34,7 +34,7 @@ module.exports = {
     });
   },
 
-  downloadFromEndpoint(url, fileExtension) {
+  downloadFromEndpoint(url, fileExtension, onTick) {
     return (callback) => {
       web.downloadFile(url, fileExtension, callback, (err, data) => {
         if(onTick)
