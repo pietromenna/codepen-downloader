@@ -8,23 +8,9 @@ module.exports = {
 
   download(url, destination, onCompleteCallback, options) {
     options = util.evaluateOptions(options);
-    let parallel = {};
-    options.targetFiles.forEach(f => parallel[f] = this.downloadFromEndpoint(url, f, options));
-
-    if (options.includeDependencies) {
-      parallel['deps'] = (callback) => {
-        web.getPenProperties(url, (err, data) => {
-          if (options.onTick)
-            options.onTick();
-          callback(err, data);
-        })
-      };
-    }
-
-    async.parallel(parallel, (err, results) => {
-      if (err) {
+    async.parallel(this._generateAsyncDownload_(url, options), (err, results) => {
+      if (err)
         return console.error(err.message);
-      }
 
       this.create(results, destination, (e) => {
         if (options.onTick)
@@ -32,6 +18,28 @@ module.exports = {
         onCompleteCallback(e);
       });
     });
+  },
+
+  _generateAsyncDownload_(url, options) {
+    let parallel = {};
+
+    // Download main files [html, js, css]
+    options.targetFiles.forEach(f => parallel[f] = this.downloadFromEndpoint(url, f, options));
+
+    // Download pen details
+    parallel['details'] = (callback) => {
+      web.getPenProperties(url, (err, data) => {
+        if (options.onTick)
+          options.onTick();
+        callback(err, data);
+      })
+    };
+
+    // @TODO: Download pre processed files
+    // parallel['js_pre_processed'] = ...
+    //   ...
+
+    return parallel;
   },
 
   downloadFromEndpoint(url, fileExtension, options) {
