@@ -53,8 +53,8 @@ module.exports = {
 
   createScriptTag(result) {
     let scripts = "";
-    if (result.deps) {
-      result.deps.resources.forEach((d) => {
+    if (result.details) {
+      result.details.resources.forEach((d) => {
         d.url = this.parseScriptUrl(d.url);
         if (d.resource_type === 'js')
         scripts = `${scripts}\n \
